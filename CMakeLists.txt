@@ -12,4 +12,4 @@ endif()
 project ("GRPCTINKER")
 
 # Include sub-projects.
-add_subdirectory ("GRPCTINKER")
+add_subdirectory ("GRPCClient")
