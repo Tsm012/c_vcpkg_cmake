@@ -3,7 +3,7 @@
 #
 
 # Add source to this project's executable.
-add_executable (Main "Main.cpp" "Main.h" "Proto/Generated/helloworld.grpc.pb.cc" "Proto/Generated/helloworld.pb.cc")
+add_executable (Main "Main.cpp" "Main.h" "Proto/cpp-service-code/Messages.grpc.pb.h" "Proto/cpp-service-code/Messages.grpc.pb.cc" "Proto/cpp-service-code/Messages.pb.h" "Proto/cpp-service-code/Messages.pb.cc" "GreeterClient.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Main PROPERTY CXX_STANDARD 20)
