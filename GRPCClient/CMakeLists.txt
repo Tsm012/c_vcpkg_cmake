@@ -9,6 +9,15 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Main PROPERTY CXX_STANDARD 20)
 endif()
 
+find_package(imgui CONFIG REQUIRED)
+target_link_libraries(Main PRIVATE imgui::imgui)
+
+find_package(glfw3 CONFIG REQUIRED)
+target_link_libraries(Main PRIVATE glfw)
+
+find_package(OpenGL REQUIRED)
+target_link_libraries(Main PRIVATE OpenGL::GL)
+
 find_package(absl CONFIG REQUIRED)
 target_link_libraries(Main PRIVATE  absl::flags_parse)
 

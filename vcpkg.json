@@ -1,7 +1,14 @@
 {
-    "dependencies": [
-        "grpc",
-        "protobuf",
-        "abseil"
-    ]
+  "dependencies": [
+    "grpc",
+    "protobuf",
+    "abseil",
+    "imgui",
+    "opengl",
+    "glfw3",
+    {
+      "name": "imgui",
+      "features": [ "glfw-binding", "opengl3-binding" ]
+    }
+  ]
 }
