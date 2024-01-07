@@ -40,7 +40,7 @@ public:
             GPR_ASSERT(ok);
 
             if (call->status.ok())
-                std::cout << "Greeter received: " << call->reply.message() << std::endl;
+                input = call->reply.message() + "\n";
             else
                 std::cout << "RPC failed" << std::endl;
 
@@ -48,6 +48,7 @@ public:
             delete call;
         }
     }
+    std::string input;
 
 private:
     // struct for keeping state and data information

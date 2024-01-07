@@ -8,30 +8,18 @@
 #include <GLFW/glfw3.h>
 
 
-ABSL_FLAG(std::string, target, "172.21.242.34:30000", "Server address");
+ABSL_FLAG(std::string, target, "localhost:30000", "Server address");
 
 
 int main(int argc, char** argv) {
-    //absl::ParseCommandLine(argc, argv);
-    //std::string target_str = absl::GetFlag(FLAGS_target);
+    absl::ParseCommandLine(argc, argv);
+    std::string target_str = absl::GetFlag(FLAGS_target);
 
-    //GreeterClient greeter(
-    //    grpc::CreateChannel(target_str, grpc::InsecureChannelCredentials()));
+    GreeterClient greeter(
+        grpc::CreateChannel(target_str, grpc::InsecureChannelCredentials()));
 
-    //// Spawn reader thread that loops indefinitely
-    //std::thread thread_ = std::thread(&GreeterClient::AsyncCompleteRpc, &greeter);
-
-
-
-    //std::string message = "";
-
-    //std::cout << "Press control-c to quit" << std::endl << std::endl;
-
-    //while (true) 
-    //{
-    //    //std::getline(std::cin, message);
-    //    //greeter.SayHello(message);  // The actual RPC call!
-    //}
+    // Spawn reader thread that loops indefinitely
+    std::thread thread_ = std::thread(&GreeterClient::AsyncCompleteRpc, &greeter);
 
     if (!glfwInit())
         return 1;
@@ -52,6 +40,9 @@ int main(int argc, char** argv) {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 130");
 
+    char* chat = new char[10000]();
+    char *input = new char[20]();
+
     // Main loop
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
@@ -60,9 +51,22 @@ int main(int argc, char** argv) {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+        if (greeter.input != "") {
+            strcat(chat, greeter.input.c_str());
+            greeter.input = "";
+        }
+
         // Your ImGui code here
-        ImGui::Begin("Hello, world!");
-        ImGui::Text("This is a simple ImGui application.");
+        ImGui::Begin("Shantz Chat");
+        ImGui::Text(chat);
+        ImGui::InputText("Chat Message", input, 20);
+        if (ImGui::Button("Click me!"))
+        {
+            strcat(chat, input);
+            strcat(chat, "\n");
+            greeter.SayHello(input);
+            input = new char[10000]();
+        }
         ImGui::End();
 
         ImGui::Render();
